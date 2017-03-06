@@ -1,7 +1,6 @@
 # purescript-query-params
 
-This library provides a simple means of getting query parameters from the browser's url or from a specific url.  See the
-[docs](./docs/QueryParams.md).
+A PureScript library for reading query parameters from urls. See the [docs](./docs/QueryParams.md).
 
 # Quick Start
 

@@ -1,27 +1,5 @@
 ## Module QueryParams
 
-#### `QueryParamActionF`
-
-``` purescript
-data QueryParamActionF f
-```
-
-A functor defining actions you can perform on
-a url
-
-##### Instances
-``` purescript
-Functor QueryParamActionF
-```
-
-#### `QueryParamAction`
-
-``` purescript
-type QueryParamAction a = Free QueryParamActionF a
-```
-
-A type alias for a QueryParamAction program
-
 #### `runInEnv`
 
 ``` purescript
@@ -36,6 +14,9 @@ and return the result
 ``` purescript
 runInBrowser :: forall a. QueryParamAction a -> a
 ```
+
+Run a QueryParamAction program in the browser
+and use the browser's current url
 
 #### `getParam`
 
@@ -53,4 +34,8 @@ hasParam :: String -> QueryParamAction Boolean
 
 Check if a url has a particular query parameter
 
+#### `QueryParamAction`
 
+``` purescript
+type QueryParamAction a = Free QueryParamActionF a
+```

@@ -21,15 +21,15 @@ foreign import getParam_ :: Fn4 String QueryParams (String -> Maybe String) (Str
 foreign import runInWindow_ :: Fn0 QueryParams
 foreign import runInEnv_ :: URL -> QueryParams
 
--- | A functor defining actions you can perform on
--- | a url
+-- A functor defining actions you can perform on
+-- a url
 data QueryParamActionF f
   = GetParam String (String -> QueryParams -> f)
   | HasParam String (String -> QueryParams -> f)
 
 derive instance actionsFFunctor :: Functor QueryParamActionF
 
--- | A type alias for a QueryParamAction program
+-- A type alias for a QueryParamAction program
 type QueryParamAction a = Free QueryParamActionF a
 
 -- | Run a QueryParamAction program on a particular url
@@ -37,6 +37,8 @@ type QueryParamAction a = Free QueryParamActionF a
 runInEnv :: forall a. URL -> QueryParamAction a -> a
 runInEnv url = runFree (actionsN url runInEnv_)
 
+-- | Run a QueryParamAction program in the browser
+-- | and use the browser's current url
 runInBrowser :: forall a. QueryParamAction a -> a
 runInBrowser = runFree (actionsN "" (\url -> runFn0 runInWindow_))
 
