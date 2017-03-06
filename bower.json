@@ -1,0 +1,28 @@
+{
+  "name": "purescript-query-params",
+  "author" : [
+      "Dominick Gendill <dgendill@gmail.com> (http://dgendill.com)"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output",
+    "test"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dgendill/purescript-query-params"
+  },
+  "dependencies": {
+    "purescript-prelude": "2.5.0",
+    "purescript-console": "2.0.0",
+    "purescript-free": "3.4.0",
+    "purescript-functions": "2.0.0"
+  },
+  "devDependencies": {
+    "purescript-psci-support": "2.0.0",
+    "purescript-quickcheck": "3.1.1",
+    "purescript-test-unit": "10.1.0"
+  }
+}
