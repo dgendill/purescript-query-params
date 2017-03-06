@@ -1,11 +1,5 @@
 'use strict';
 
-// if (!document) {
-//   dom = require('node-dom').dom
-//   window = dom(page,null,options);
-//   document = window.document;
-// }
-
 var parseParams = function(search) {
   return (function(a) {
       if (a == "") return {};
@@ -22,10 +16,8 @@ var parseParams = function(search) {
   })(search.substr(1).split('&'));
 }
 
-// var params = parseParams();
-
 exports.runInWindow_ = function() {
-    return parseParams(window.location.search);
+  return parseParams(window.location.search);
 }
 
 exports.runInEnv_ = function(url) {

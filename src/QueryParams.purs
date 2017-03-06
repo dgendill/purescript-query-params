@@ -2,12 +2,13 @@ module QueryParams (
     getParam,
     hasParam,
     runInEnv,
+    runInBrowser,
     QueryParamAction,
     QueryParamActionF
   ) where
 
 import Control.Monad.Free (Free, liftF, runFree)
-import Data.Function.Uncurried (Fn2, Fn4, runFn2, runFn4)
+import Data.Function.Uncurried (Fn0, Fn2, Fn4, runFn0, runFn2, runFn4)
 import Data.Maybe (Maybe(..))
 import Prelude (class Functor, const)
 
@@ -17,7 +18,7 @@ foreign import data QueryParams :: *
 
 foreign import hasParam_ :: Fn2 String QueryParams Boolean
 foreign import getParam_ :: Fn4 String QueryParams (String -> Maybe String) (String -> Maybe String) (Maybe String)
-foreign import runInWindow_ :: QueryParams
+foreign import runInWindow_ :: Fn0 QueryParams
 foreign import runInEnv_ :: URL -> QueryParams
 
 -- | A functor defining actions you can perform on
@@ -27,6 +28,8 @@ data QueryParamActionF f
   | HasParam String (String -> QueryParams -> f)
 
 derive instance actionsFFunctor :: Functor QueryParamActionF
+
+-- | A type alias for a QueryParamAction program
 type QueryParamAction a = Free QueryParamActionF a
 
 -- | Run a QueryParamAction program on a particular url
@@ -35,9 +38,9 @@ runInEnv :: forall a. URL -> QueryParamAction a -> a
 runInEnv url = runFree (actionsN url runInEnv_)
 
 runInBrowser :: forall a. QueryParamAction a -> a
-runInBrowser = runFree (actionsN "" (\_ -> runInWindow_))
+runInBrowser = runFree (actionsN "" (\url -> runFn0 runInWindow_))
 
-actionsN :: forall a. URL -> (_ -> QueryParams) -> QueryParamActionF a -> a
+actionsN :: forall a. URL -> (URL -> QueryParams) -> QueryParamActionF a -> a
 actionsN url qp a =
   case a of
     (GetParam param fn) ->
@@ -45,7 +48,7 @@ actionsN url qp a =
     (HasParam param fn) ->
       (fn param params)
   where
-    params = qp url--runInEnv_ url
+    params = qp url
 
 -- | Get a query parameter value from a url
 getParam :: String -> QueryParamAction (Maybe String)

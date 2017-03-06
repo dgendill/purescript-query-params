@@ -8,7 +8,8 @@
     "node_modules",
     "bower_components",
     "output",
-    "test"
+    "test",
+    "example"
   ],
   "repository": {
     "type": "git",

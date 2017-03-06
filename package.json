@@ -1,0 +1,25 @@
+{
+  "name": "purescript-query-params",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A simple library for handling url query parameters in PureScript",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "example": "example",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "pulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dgendill/purescript-query-params.git"
+  },
+  "author": "Dominick Gendill",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dgendill/purescript-query-params/issues"
+  },
+  "homepage": "https://github.com/dgendill/purescript-query-params#readme"
+}

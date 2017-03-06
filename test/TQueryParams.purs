@@ -47,5 +47,5 @@ main = void $ runTest do
   suite "Query Parameter Tests" do
     test test1Show do
       quickCheck joiningUrlParamsWorks
-    test ("p1 exists and p2 exists in " <> test1) do
+    test ("quickcheck p1 exists and p2 exists in " <> test1) do
       quickCheck hasUrlParamsWorks
