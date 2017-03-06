@@ -10,7 +10,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "pulp test"
+    "test": "pulp test",
+    "example": "pulp build --main Example --to example/example.js"
   },
   "repository": {
     "type": "git",
