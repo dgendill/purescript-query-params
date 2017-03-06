@@ -6,6 +6,6 @@ exports.encodeURIComponent = function(s) {
   try {
     return encodeURIComponent(s);
   } catch (e) {
-    return s
+    return s;
   }
 }

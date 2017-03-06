@@ -1,5 +1,7 @@
 # purescript-query-params
 
+[![Build Status](https://travis-ci.org/dgendill/purescript-query-params.svg?branch=master)](https://travis-ci.org/dgendill/purescript-query-params)
+
 A PureScript library for reading query parameters from urls. See the [docs](./docs/QueryParams.md).
 
 # Quick Start
