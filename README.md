@@ -31,3 +31,5 @@ main = do
     false -> log $ "URL does not have ?test in it"
 
 ```
+
+Also, see the [Example](./example/Example.purs), which you can build with `npm run example` and then view with `example/index.html`.
