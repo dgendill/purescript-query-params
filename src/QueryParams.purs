@@ -7,10 +7,16 @@ module QueryParams (
     QueryParamActionF
   ) where
 
-import Control.Monad.Free (Free, liftF, runFree)
-import Data.Function.Uncurried (Fn0, Fn2, Fn4, runFn0, runFn2, runFn4)
+import Prelude
+import Control.Monad.Eff (Eff)
+import Control.Monad.Free (Free, foldFree, liftF)
+import Control.Monad.Reader (ask, runReader)
+import Data.Function.Uncurried (Fn2, Fn4, runFn2, runFn4)
 import Data.Maybe (Maybe(..))
-import Prelude (class Functor, const)
+import DOM (DOM)
+import DOM.HTML (window) as DOM
+import DOM.HTML.Location (search) as DOM
+import DOM.HTML.Window (location) as DOM
 
 type URL = String
 
@@ -18,8 +24,10 @@ foreign import data QueryParams :: *
 
 foreign import hasParam_ :: Fn2 String QueryParams Boolean
 foreign import getParam_ :: Fn4 String QueryParams (String -> Maybe String) (String -> Maybe String) (Maybe String)
-foreign import runInWindow_ :: Fn0 QueryParams
 foreign import runInEnv_ :: URL -> QueryParams
+
+runInWindow :: forall eff. Eff (dom :: DOM | eff) QueryParams
+runInWindow = runInEnv_ <$> (DOM.search =<< DOM.location =<< DOM.window)
 
 -- A functor defining actions you can perform on
 -- a url
@@ -35,22 +43,17 @@ type QueryParamAction a = Free QueryParamActionF a
 -- | Run a QueryParamAction program on a particular url
 -- | and return the result
 runInEnv :: forall a. URL -> QueryParamAction a -> a
-runInEnv url = runFree (actionsN url runInEnv_)
+runInEnv url act = runReader (foldFree (actionsN ask) act) (runInEnv_ url)
 
 -- | Run a QueryParamAction program in the browser
 -- | and use the browser's current url
-runInBrowser :: forall a. QueryParamAction a -> a
-runInBrowser = runFree (actionsN "" (\url -> runFn0 runInWindow_))
+runInBrowser :: forall a eff. QueryParamAction a -> Eff (dom :: DOM | eff) a
+runInBrowser = foldFree (actionsN runInWindow)
 
-actionsN :: forall a. URL -> (URL -> QueryParams) -> QueryParamActionF a -> a
-actionsN url qp a =
-  case a of
-    (GetParam param fn) ->
-      (fn param params)
-    (HasParam param fn) ->
-      (fn param params)
-  where
-    params = qp url
+actionsN :: forall f. Functor f => f QueryParams -> QueryParamActionF ~> f
+actionsN params = case _ of
+  GetParam param fn -> fn param <$> params
+  HasParam param fn -> fn param <$> params
 
 -- | Get a query parameter value from a url
 getParam :: String -> QueryParamAction (Maybe String)

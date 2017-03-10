@@ -19,7 +19,8 @@
     "purescript-prelude": "2.5.0",
     "purescript-console": "2.0.0",
     "purescript-free": "3.4.0",
-    "purescript-functions": "2.0.0"
+    "purescript-functions": "2.0.0",
+    "purescript-dom": "^3.6.0"
   },
   "devDependencies": {
     "purescript-psci-support": "2.0.0",
