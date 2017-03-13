@@ -3,15 +3,15 @@ module Example where
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log)
 import Prelude (Unit, bind, (<>), show, ($))
-import QueryParams (getParam, hasParam, runInBrowser, runInEnv)
+import QueryParams (BROWSERURL, getParam, hasParam, runInBrowser, runInEnv)
 
-main :: Eff (console :: CONSOLE) Unit
+main :: Eff (browserurl :: BROWSERURL, console :: CONSOLE) Unit
 main = do
 
-  let browserHasParam = runInBrowser $ hasParam "test"
+  browserHasParam <- runInBrowser $ hasParam "test"
 
   -- Get a query parameter from the browser's current url
-  let browserValue = runInBrowser $ getParam "test"
+  browserValue <- runInBrowser $ getParam "test"
 
   -- Get a query parameter from a specific url
   let envValue = (runInEnv "http://test.com?test=abc") $ getParam "test"

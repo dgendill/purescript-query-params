@@ -1,5 +1,13 @@
 ## Module QueryParams
 
+#### `BROWSERURL`
+
+``` purescript
+data BROWSERURL :: Effect
+```
+
+runInBrowser requires the BROWSERURL effect
+
 #### `runInEnv`
 
 ``` purescript
@@ -12,7 +20,7 @@ and return the result
 #### `runInBrowser`
 
 ``` purescript
-runInBrowser :: forall a. QueryParamAction a -> a
+runInBrowser :: forall e a. QueryParamAction a -> Eff (browserurl :: BROWSERURL | e) a
 ```
 
 Run a QueryParamAction program in the browser
@@ -33,9 +41,3 @@ hasParam :: String -> QueryParamAction Boolean
 ```
 
 Check if a url has a particular query parameter
-
-#### `QueryParamAction`
-
-``` purescript
-type QueryParamAction a = Free QueryParamActionF a
-```

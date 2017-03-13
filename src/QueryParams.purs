@@ -4,15 +4,20 @@ module QueryParams (
     runInEnv,
     runInBrowser,
     QueryParamAction,
-    QueryParamActionF
+    QueryParamActionF,
+    BROWSERURL
   ) where
 
+import Control.Monad.Eff (Eff)
 import Control.Monad.Free (Free, liftF, runFree)
 import Data.Function.Uncurried (Fn0, Fn2, Fn4, runFn0, runFn2, runFn4)
 import Data.Maybe (Maybe(..))
-import Prelude (class Functor, const)
+import Prelude (class Functor, const, pure)
 
 type URL = String
+
+-- | runInBrowser requires the BROWSERURL effect
+foreign import data BROWSERURL :: !
 
 foreign import data QueryParams :: *
 
@@ -39,8 +44,8 @@ runInEnv url = runFree (actionsN url runInEnv_)
 
 -- | Run a QueryParamAction program in the browser
 -- | and use the browser's current url
-runInBrowser :: forall a. QueryParamAction a -> a
-runInBrowser = runFree (actionsN "" (\url -> runFn0 runInWindow_))
+runInBrowser :: forall e a. QueryParamAction a -> Eff ( browserurl :: BROWSERURL | e ) a
+runInBrowser q = pure (runFree (actionsN "" (\url -> runFn0 runInWindow_)) q)
 
 actionsN :: forall a. URL -> (URL -> QueryParams) -> QueryParamActionF a -> a
 actionsN url qp a =
