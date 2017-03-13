@@ -34,10 +34,10 @@ data QueryParamActionF f
 
 derive instance actionsFFunctor :: Functor QueryParamActionF
 
--- A type alias for a QueryParamAction program
+-- A type alias for a `QueryParamAction` program
 type QueryParamAction a = Free QueryParamActionF a
 
--- | Run a a series of QueryParamActions on a particular url
+-- | Run a series of `QueryParamActions` on a particular url
 -- | and return a value, e.g.
 -- |
 -- | ```purescript
@@ -50,7 +50,7 @@ type QueryParamAction a = Free QueryParamActionF a
 runInEnv :: forall a. URL -> QueryParamAction a -> a
 runInEnv url = runFree (actionsN url runInEnv_)
 
--- | Run a a series of QueryParamActions on the browser's
+-- | Run a series of `QueryParamActions` on the browser's
 -- | current URL, and return a value e.g.
 -- |
 -- | ```purescript

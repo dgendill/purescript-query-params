@@ -14,7 +14,7 @@ runInBrowser requires the BROWSERURL effect
 runInEnv :: forall a. URL -> QueryParamAction a -> a
 ```
 
-Run a a series of QueryParamActions on a particular url
+Run a series of `QueryParamActions` on a particular url
 and return a value, e.g.
 
 ```purescript
@@ -31,7 +31,7 @@ runInEnv "http://test.com?userid=john" $ do
 runInBrowser :: forall e a. QueryParamAction a -> Eff (browserurl :: BROWSERURL | e) a
 ```
 
-Run a a series of QueryParamActions on the browser's
+Run a series of `QueryParamActions` on the browser's
 current URL, and return a value e.g.
 
 ```purescript
