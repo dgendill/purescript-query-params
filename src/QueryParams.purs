@@ -4,8 +4,7 @@ module QueryParams (
     runInEnv,
     runInBrowser,
     QueryParamAction,
-    QueryParamActionF,
-    BROWSERURL
+    QueryParamActionF
   ) where
 
 import Prelude
@@ -20,9 +19,6 @@ import DOM.HTML.Location (search) as DOM
 import DOM.HTML.Window (location) as DOM
 
 type URL = String
-
--- | runInBrowser requires the BROWSERURL effect
-foreign import data BROWSERURL :: !
 
 foreign import data QueryParams :: *
 

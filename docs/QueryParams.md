@@ -1,13 +1,5 @@
 ## Module QueryParams
 
-#### `BROWSERURL`
-
-``` purescript
-data BROWSERURL :: Effect
-```
-
-runInBrowser requires the BROWSERURL effect
-
 #### `runInEnv`
 
 ``` purescript
@@ -28,20 +20,11 @@ runInEnv "http://test.com?userid=john" $ do
 #### `runInBrowser`
 
 ``` purescript
-runInBrowser :: forall e a. QueryParamAction a -> Eff (browserurl :: BROWSERURL | e) a
+runInBrowser :: forall a eff. QueryParamAction a -> Eff (dom :: DOM | eff) a
 ```
 
-Run a series of `QueryParamActions` on the browser's
-current URL, and return a value e.g.
-
-```purescript
-info <- (runInBrowser $ do
-  muserid <- getParam "userid"
-  mtimestamp <- getParam "timestamp"
-  pure $ ((\userid timestamp ->
-    "User " <> userid <> " was here at " <> timestamp
-  ) <$> muserid <*> mtimestamp)
-```
+Run a QueryParamAction program in the browser
+and use the browser's current url
 
 #### `getParam`
 
