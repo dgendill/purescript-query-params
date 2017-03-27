@@ -16,10 +16,6 @@ var parseParams = function(search) {
   })(search.substr(1).split('&'));
 }
 
-exports.runInWindow_ = function() {
-  return parseParams(window.location.search);
-}
-
 exports.runInEnv_ = function(url) {
   var parts = url.split("?");
   if (parts.length > 1) {

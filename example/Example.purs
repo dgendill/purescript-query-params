@@ -2,11 +2,12 @@ module Example where
 
 import Prelude
 import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log, logShow)
+import Control.Monad.Eff.Console (CONSOLE, log)
+import DOM (DOM)
 import Prelude (Unit, bind, (<>), show, ($))
 import QueryParams (BROWSERURL, getParam, hasParam, runInBrowser, runInEnv)
 
-main :: Eff (browserurl :: BROWSERURL, console :: CONSOLE) Unit
+main :: Eff (dom :: DOM, console :: CONSOLE) Unit
 main = do
 
   browserHasParam <- runInBrowser $ hasParam "test"
